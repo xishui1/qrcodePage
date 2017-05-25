@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>资产微窗</title>
+    <link rel="stylesheet" href="css/qrcode-index.css">
+</head>
+
+<body>
+    <section class="block-head">
+        <div class="zcws">
+            资产微窗
+        </div>
+        <div class="logowap">
+            <img src="images/blue-icon/xiaoxingji.png">
+        </div>
+        <div class="block-head-inf">
+            <p>
+                <span>搜索代码</span>
+                <span>HW-EPS-ZZZ-123456</span>
+            </p>
+            <p>
+                <span>机柜位置</span>
+                <span>湖东移动大楼-5楼机房-A1机柜</span>
+            </p>
+            <p>
+                <span>机房</span>
+                <span id="log">7</span>
+            </p>
+        </div>
+    </section>
+    <main class="housepage">
+        <div class="blck">
+            <div class="blck-h"><i class="icon-circle"></i>机房统计信息表<i class="i-toggle"></i></div>
+            <div class="blck-c clearfix">
+                <div class="col-xs-6">
+                    <div class="card ">
+                        <div class="card-h"> 资产设备统计 </div>
+                        <div class="card-c">
+                            <div class="echart-contain">
+                                <canvas id="pie" style="width:100%;height:100%;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="card  ">
+                        <div class="card-h"> 资产设备统计 </div>
+                        <div class="card-c">
+                            <ul class="alarmlist">
+                                <li class="alarm-level-1"><span class="alarm-text">严重：<em class="alarm-value">45</em></span><span class="alarm-bar"><i class="alarm-bar-innear"></i></span></li>
+                                <li class="alarm-level-2"><span class="alarm-text">重要：<em class="alarm-value">20</em ></span><span class="alarm-bar"><i class="alarm-bar-innear"></i></span></li>
+                                <li class="alarm-level-3"><span class="alarm-text">一般：<em class="alarm-value">90</em></span><span class="alarm-bar"><i class="alarm-bar-innear"></i></span></li>
+                                <li class="alarm-level-4"><span class="alarm-text">正常：<em class="alarm-value">95</em></span><span class="alarm-bar"><i class="alarm-bar-innear"></i></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="canvas-wap">
+            <canvas id="ho"></canvas>
+        </div>
+   </main>
+  <script type="text/javascript" src="js/jquery/jquery-1.11.0.min.js"></script>  
+    <script type="text/javascript" src="js/hammer.js"></script>
+  
+<!--      <script src="https://a.alipayobjects.com/g/datavis/g2/2.3.1/g2.js"></script>
+     <script type="text/javascript" src="js/echart/echarts.min.js"></script>
+    <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/hammer.js/2.0.8/hammer.min.js"></script>
+    <script src="https://cdn.bootcss.com/Chart.js/2.5.0/Chart.min.js"></script>-->
+    <script type="text/javascript" src="js/myjf.js"></script>
+    <script type="text/javascript" src="js/data.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        alarmBar();
+        var s = myJF.myDev('ho', housedata);
+        s.draw();
+
+        $(".blck-h").on("click", function() {
+            $(this).parents(".blck").toggleClass("hide");
+        });
+        // var chart = echarts.init(document.getElementById('pie'));
+        // chart.setOption({
+        //     baseOption: {
+        //         legend: {
+        //             orient: 'vertical',
+        //             x: 'left',
+        //             data: [{
+        //                 icon: 'rect',
+        //                 name: '主机'
+        //             }, {
+        //                 icon: 'rect',
+        //                 name: '网络设备'
+        //             }, {
+        //                 icon: 'rect',
+        //                 name: '存储设备'
+        //             }, {
+        //                 icon: 'rect',
+        //                 name: '其他设备'
+        //             }]
+        //         },
+        //         series: [{
+        //             name: '设备',
+        //             type: 'pie',
+        //             avoidLabelOverlap: false,
+        //             labelLine: {
+        //                 normal: {
+        //                     show: true
+        //                 }
+        //             },
+        //             data: [{
+        //                 value: 15,
+        //                 name: '网络设备',
+        //                 itemStyle: {
+        //                     normal: {
+        //                         color: '#46d26f'
+        //                     }
+        //                 }
+        //             }, {
+        //                 value: 15,
+        //                 name: '存储设备',
+        //                 itemStyle: {
+        //                     normal: {
+        //                         color: '#e779f9'
+        //                     }
+        //                 }
+        //             }, {
+        //                 value: 10,
+        //                 name: '其他设备',
+        //                 itemStyle: {
+        //                     normal: {
+        //                         color: '#00b7ee'
+        //                     }
+        //                 }
+        //             }, {
+        //                 value: 60,
+        //                 name: '主机',
+        //                 itemStyle: {
+        //                     normal: {
+        //                         color: '#1879fb'
+        //                     }
+        //                 }
+        //             }]
+        //         }]
+        //     },
+        //     media: [{
+        //         query: { },
+        //         option: {
+        //             legend: {
+        //                 top: 12,
+        //                 itemWidth: 12,
+        //                 itemHeight: 12,
+        //                 itemGap: 15,
+        //                 textStyle: {
+        //                     color: '#fff',
+        //                     fontSize: 14
+        //                 },
+        //             },
+        //             series: [{
+        //                 radius: ['60%', '70%'],
+        //                 center: ['63%', '50%'],
+        //                  labelLine:{
+
+        //                 }
+        //             }],
+        //             label: {
+        //                 normal: {
+        //                     show: true,
+        //                     formatter: '{d}%',
+        //                     textStyle: {
+        //                         color: "#fff",
+        //                         fontSize: 14
+        //                     }
+        //                 },
+
+        //             },
+        //         }
+        //     },
+        //     {
+        //         query: {maxWidth:200},
+        //         option: {
+        //             legend: {
+        //                 top: 6,
+        //                 itemWidth: 6,
+        //                 itemHeight: 6,
+        //                 itemGap: 6,
+        //                 textStyle: {
+        //                     color: '#fff',
+        //                     fontSize: 8
+        //                 },
+        //             },
+        //             series: [{
+        //                 radius: ['45%', '55%'],
+        //                 center: ['63%', '50%'],
+        //                 labelLine:{
+        //                     normal:{
+        //                         length:6,
+        //                         length2:0
+        //                     }
+        //                 }
+        //             }],
+        //             label: {
+        //                 normal: {
+        //                     show: true,
+        //                     formatter: '{d}%',
+        //                     textStyle: {
+        //                         color: "#fff",
+        //                         fontSize: 8
+        //                     }
+        //                 },
+
+        //             },
+        //         }
+        //     }]
+
+
+        // });data: [{
+        //                 value: 15,
+        //                 name: '网络设备',
+        //                 itemStyle: {
+        //                     normal: {
+        //                         color: '#46d26f'
+        //                     }
+        //                 }
+        //             }, {
+        //                 value: 15,
+        //                 name: '存储设备',
+        //                 itemStyle: {
+        //                     normal: {
+        //                         color: '#e779f9'
+        //                     }
+        //                 }
+        //             }, {
+        //                 value: 10,
+        //                 name: '其他设备',
+        //                 itemStyle: {
+        //                     normal: {
+        //                         color: '#00b7ee'
+        //                     }
+        //                 }
+        //             }, {
+        //                 value: 60,
+        //                 name: '主机',
+        //                 itemStyle: {
+        //                     normal: {
+        //                         color: '#1879fb'
+        //                     }
+        //                 }
+        //             }]
+
+        // var data = [
+        //    {  value: 15},
+        //    { value: 15},
+        //    {  value:10},
+        //    {, value: 60}, 
+        //  ];
+        // var ctx = document.getElementById("pie").getContext("2d");
+        // var data = {
+        //     labels: [
+        //         "网络设备",
+        //         "存储设备",
+        //         "其他设备",
+        //         "主机"
+        //     ],
+        //     datasets: {
+        //         data: [15, 15, 10, 60],
+        //         backgroundColor: [
+        //             "#46d26f",
+        //             "#e779f9",
+        //             "#00b7ee",
+        //             "#1879fb"
+        //         ],
+        //         hoverBackgroundColor: [
+        //             "#46d26f",
+        //             "#e779f9",
+        //             "#00b7ee",
+        //             "#1879fb"
+        //         ]
+        //     }
+        // }
+
+        // // new Chart(ctx).Doughnut(data,null );
+        // new Chart(ctx, {
+        //     type: 'doughnut',
+        //     data: data,
+        //     options: {
+        //         animation: {
+        //             animateScale: true
+        //         }
+        //     }
+        // });
+    });
+
+    function alarmBar() {
+        var sum = 1;
+        $(".alarm-value").each(function() {
+            sum += (parseInt($(this).html()) || 0);
+        })
+        $(".alarmlist li").each(function() {
+            var val = parseInt($(this).find(".alarm-value").html());
+            $(this).find(".alarm-bar-innear").css("width", val / sum * 100 + "%");
+        })
+    }
+    </script>
+</body>
+
+</html>

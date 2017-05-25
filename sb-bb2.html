@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<title>资产微窗</title>
+	<link rel="stylesheet" href="css/qrcode-index.css">
+    <script type="text/javascript" src="js/jquery/jquery-1.11.0.min.js"></script> 
+</head>
+<body>
+	<header >
+		<i class="i-back"></i>设备背板
+	</header>
+	<div class="pin-wap">
+		<section class="b active">
+			<section class="sb-pic">
+				<div class="sb-pic-t">
+					<i class="i-rec pink-b"></i>告警
+					<i class="i-rec green-b"></i>正常
+					<i class="i-rec gray-b"></i>未使用
+				</div>
+				<canvas id="equip" width="630px" height="89px" style="display: block;margin:0 auto"></canvas>
+			</section>
+		</section>
+		<section class="s-block">
+			<ul class="tab-h">
+				<li class="sel"><a href="#">集成</a></li>
+				<li ><a href="#">板卡1</a></li>
+				<li><a href="#">板卡2</a></li>
+			</ul>
+			<div class="t-detail">
+			  <div class="t-d-tit">
+				<span class="tag active "><i>port1</i></span>
+                <span class="tag "><i>Port4</i></span>
+                <span class="tag "><i>Port5</i></span>
+                <span class="tag "><i>Port6</i></span>
+              </div>
+                <!-- 端口号1 begin-->
+		     
+			    <div class="p-header">
+			     <i class="i-t-pink"></i>端口号 Port1
+           
+			    </div>
+			    <div class="p-detail">
+				  <div class="p-de-tit"><i class="i-basic i-s1"></i>设备总体性能</div>
+				  <div class="p-de-con">
+					<div class="block-detail-item">
+					  <!-- <span>端口流入速率<span class="ml20">12.5bps</span></span>
+                      <span>端口流出速率<span class="ml20">12.5bps</span></span> -->
+                      <div class="f-item">
+                      	<label for="">端口流入速率</label><span>12.5bps</span>
+                      </div>
+                      <div class="f-item">
+                      	<label for="">端口流入速率</label><span>12.5bps</span>
+                      </div>
+					</div>
+				  </div>
+				 <div class="p-de-tit"><i class="i-basic i-s2"></i>路由趋势</div>
+				 
+				 	<ul class="pro">
+				 	 	<li ><span class="tag "><i>port4</i></span></li>
+				 	 	<li class="current">
+				 	     <span class="tag active"><i>enth1</i></span>
+				 	  <!-- <span style="position:absolute;left:-5px;top:50%;"><i class="hextend block-hide"></i></span> -->
+				 	  
+				 	  </li>
+				 	 	<li ><span class="tag"><i>enth2</i></span></li>
+				 	 	<li><span class="tag"><i>enth3</i></span></li>
+				 	 </ul>
+				 	 <div class="sb-pic pm">
+				 	 	<div class="sb-pic-t">
+				 	 		<i class="i-rec pink-b"></i>告警
+				 	 		<i class="i-rec green-b"></i>正常
+				 	 		<i class="i-rec gray-b"></i>未使用
+				 	 	</div>
+				 	 	
+				 	    <img src="images/shebei.png" alt="交换机" style="width: 15.2rem;height: 2.5rem;">
+				 	    <div class="p-de-con bz-c">
+				 	    	<!-- <div class="block-detail-item bz">
+					         <span>设备类型<span class="ml20">集线器集线器集线器集线器集线器</span></span>
+                             <span>设备名称<span class="ml20">xxPDU</span></span>
+					        </div>
+					        <div class="block-detail-item bz">
+					         <span >位&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;置<span class="ml20">湖东移动大楼-5号机房-A1机柜</span></span>
+                             
+					        </div> -->
+					        <div class="block-detail-item bz ">
+					        	<div class="f-item">
+					        		<label for="">设备类型</label><span>集线器集线器</span>
+					        	</div>
+					        	<div class="f-item">
+					        		<label for="">设备名称</label><span>xxPDU</span>
+					        	</div>
+					        	
+					        </div>
+					        <div class="block-detail-item bz">
+					        	<div class="f-item">
+					        		<label for="">位&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;置</label><span>湖东移动大楼-5号机房-A1机柜</span>
+					        	</div>
+					        </div>
+				 	    </div>
+				 	 	
+				 	 	
+				 	 </div>
+				 
+			    </div>
+		      
+		<!-- 端口号1 end-->
+			</div>
+			
+		</section>
+		
+	</div>
+    <script type="text/javascript" src="js/myjf.js"></script>
+    <script type="text/javascript" src="js/data.js"></script>
+	<script type="text/javascript"> 
+		var s=myJF.mEquip('equip',equip);
+ 		s.draw();
+ 		setTimeout(function(){
+ 			var p=s.getPort();
+ 		for(var i=0,l=p.length;i<l;i++){
+ 			var c=p[i];
+ 			c.addEventListener("click",function(){
+ 				console.log(c);
+ 			}); 
+ 		}
+ 		},1000);
+ 		
+	</script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>资产微窗</title>
+    <link rel="stylesheet" href="css/qrcode-index.css">
+    <script type="text/javascript" src="js/jquery/jquery-1.11.0.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <i class="i-back"></i>设备背板
+    </header>
+    <div class="pin-wap">
+        <section class="b active">
+            <section class="sb-pic">
+                <div class="sb-pic-t">
+                    <i class="i-rec pink-b"></i>告警
+                    <i class="i-rec green-b"></i>正常
+                    <i class="i-rec gray-b"></i>未使用
+                </div>
+                <canvas id="equip" style=" " class="equipCanvas" height="240"></canvas>
+            </section>
+        </section>
+        <section class="s-block">
+	           	 <ul class="tab-h">
+	          <!--  	    <li class="sel"><a href="#">集成</a></li>
+	           	    <li><a href="#">板卡1       </a></li>
+	           	    <li><a href="#">板卡2</a></li> -->
+	           	</ul> 
+ 
+           <div class="t-detail"> 
+                	<div class="t-d-tit">
+                	   <!--  <span class="tag active ">port1</span>
+                	    <span class="tag ">Port4</span>
+                	    <span class="tag ">Port5</span>
+                	    <span class="tag ">Port6</span> -->
+                	</div> 
+                <!-- 端口号1 begin-->
+              <div class="p-header">
+                    <i class="i-t-pink"></i> <span class="p-header-t"></span>
+                </div>
+                <div class="p-detail">
+                    <div class="p-de-tit"><i class="i-basic i-s1"></i>设备总体性能</div>
+                    <div class="p-de-con">
+                        <div class="block-detail-item">
+                            <!-- <span>端口流入速率<span class="ml20">12.5bps</span></span>
+                      <span>端口流出速率<span class="ml20">12.5bps</span></span> -->
+                            <div class="f-item">
+                                <label for="">端口流入速率</label><span>12.5bps</span>
+                            </div>
+                            <div class="f-item">
+                                <label for="">端口流入速率</label><span>12.5bps</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-de-tit"><i class="i-basic i-s2"></i>路由趋势</div>
+                    <ul class="pro">
+                        <li><span class="tag "><i>port42&12</i></span></li>
+                        <li class="current">
+                            <span class="tag active"><i>port42&12</i></span> 
+                            
+                        </li>
+                        <li><span class="tag"><i>port42&12</i></span></li>
+                        <li><span class="tag"><i>port42&12</i></span></li>
+                    </ul> 
+                    
+                            <div class="sb-pic pm">
+                                <div class="sb-pic-t">
+                                    <i class="i-rec pink-b"></i>告警
+                                    <i class="i-rec green-b"></i>正常
+                                    <i class="i-rec gray-b"></i>未使用
+                                </div>
+                                <div>
+                                     <canvas id="linkEquip" style=" " class="equipCanvas" height="80"></canvas>
+                                </div>
+                                <div class="p-de-con bz-c">
+                                   
+                                    <div class="block-detail-item bz ">
+                                        <div class="f-item">
+                                            <label for="">设备类型</label><span>集线器集线器</span>
+                                        </div>
+                                        <div class="f-item">
+                                            <label for="">设备名称</label><span>xxPDU</span>
+                                        </div>
+                                    </div>
+                                    <div class="block-detail-item bz">
+                                        <div class="f-item">
+                                            <label for="">位&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;置</label><span>湖东移动大楼-5号机房-A1机柜</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                </div>  
+
+                <!-- 端口号1 end-->
+            </div>  
+        </section>
+    </div>
+    <script type="text/javascript" src="js/myjf.min.js"></script>
+    <script type="text/javascript" src="js/data.js"></script>
+    <script type="text/javascript">
+    var canvas = document.getElementById("equip");
+    canvas.width = canvas.offsetWidth;
+    var s = myJF.myDev('equip', equip2);
+    s.draw();
+    var p = s.getPort();
+    setTimeout(function() {
+        tabInit(s);
+        for (var i = 0, l = p.length; i < l; i++) {
+            var c = p[i];
+            c.addEventListener("click", function() {
+                for (var j = 0; j < l; j++) {
+                    p[j]!==this&&(p[j].isDraw = false,p[j].isSelect= false); 
+                }
+                this.isDraw = true;
+                this.isSelect = true; 
+                s.draw(); 
+            });
+        }
+ 
+    }, 500);
+
+    function tabInit(s) {
+        var group = s.getSlot();
+        var $ul = $(".tab-h "),
+            $tablis = $(".tab-h li").hide().removeClass("sel"),
+            index = 0,
+            lil = $tablis.length,
+            $cli = null;
+           
+        for (var key in group) {
+            lil > index ? $cli = $tablis.eq(index) : ($cli = $(document.createElement('li')), $ul.append($cli));
+            $cli.html("板卡"+key).show().attr("slotKey",key); 
+        	index++; 
+        }
+       $currentTab=$(".tab-h li").eq(0) .addClass("sel");
+    	 tabc($(".tab-h li").eq(0).attr("slotKey" ));
+    }
+    function tabc(slotKey){
+     	var $portsolt=$(".t-d-tit");
+    	var portdata = s.getPortBysolt(slotKey); 
+    	//port 选项
+    	$pSpans=$portsolt.find("span").hide().removeClass("active");
+    	$pSpan= null;
+        for (var i = 0; i < portdata.length; i++) {  
+        	i<$pSpans.length?$pSpan=$pSpans.eq(i): ($pSpans  = $(document.createElement('span')).addClass("tag"), $portsolt.append($pSpans));
+        	$pSpans.html(portdata[i].getText()).attr("portId",portdata[i].getId()).show();
+        	i===0&&$pSpans.addClass("active"); 
+        }   
+    	//port inf
+    	$(".p-header-t").text("端口"+portdata[0].getText()); 
+
+
+    	//equip 
+    	
+    	linkEquip(equip,"123124")
+
+    }
+    function linkEquip(data,portId){    
+    	var canvas = document.getElementById("linkEquip");
+    	 canvas.width = canvas.offsetWidth;
+    	  canvas.height ='80';
+    	  var s = myJF.myDev('linkEquip',data ),
+    	    p=s.getPort();
+    	    for (var j = 0,l= p.length; j < l; j++) {
+                    p[j].getId()!==portId&&(p[j].isDraw = false,p[j].isSelect= false); 
+                } 
+    	 s.draw(); 
+    }
+    $(document).on("click",".tab-h li",function(){
+     	$(".tab-h li.sel").removeClass("sel");
+     	$(this).addClass("sel");
+     	tabc($(this).attr("slotKey" ));
+    });
+    </script>
+</body>
+
+</html>

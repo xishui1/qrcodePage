@@ -1,0 +1,72 @@
+
+$base-font-size:   ( 40px ) ;
+@function pxToRem($px) {
+  @return $px / $base-font-size * 1rem;
+}
+$bacolor:#e5e5e5; 
+$fontcolor:#e5e5e5;
+$maxWidth:720px;
+@font-face {
+    font-family: 'STZHONGS';
+    src: url('../fonts/STZHONGS.eot');
+    src: url('../fonts/STZHONGS?#iefix') format('embedded-opentype'), url('../fonts/STZHONGS.woff') format('woff'), url('../fonts/STZHONGS.ttf') format('truetype'), url('../fonts/STZHONGS.svg#STZHONGS') format('svg');
+}
+
+@font-face {
+    font-family: 'STXIHEI';
+    src: url('../fonts/STXIHEI.TTF');
+    src: url('../fonts/STXIHEI.eot');
+    src: url('../fonts/STXIHEI?#iefix') format('embedded-opentype'), url('../fonts/STXIHEI.woff') format('woff'), url('../fonts/STXIHEI.ttf') format('truetype'), url('../fonts/STXIHEI.svg#STXIHEI') format('svg');
+}
+
+@mixin dflex()
+{
+    display:         box;
+    display: -webkit-box;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-box-flex;
+    display:         box-flex;
+    display: -webkit-flex;
+    display:         flex;
+}
+@mixin flex($value: 1)
+{
+    display: block;
+    -webkit-box-flex: $value;
+       -moz-box-flex: $value;
+    -webkit-box-flex: $value;
+    -webkit-flex: $value;
+        -ms-flex: $value;
+            flex: $value;
+    @include box-sizing(border-box);
+}
+@mixin flex-direction($value)
+{
+  @if $value == 'column'{
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    box-orient: vertical;
+  }
+    flex-direction:$value;
+    -webkit-flex-direction: $value;
+    flex-direction: $value;
+} 
+@mixin align-items($value){ 
+  -webkit-align-items: $value;
+  align-items: $value;
+  -webkit-box-align: $value;
+}
+@mixin placeholder {
+  &::-webkit-input-placeholder {@content}
+  &:-moz-placeholder           {@content}
+  &::-moz-placeholder          {@content}
+  &:-ms-input-placeholder      {@content}  
+}
+ @mixin clearfix() {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
