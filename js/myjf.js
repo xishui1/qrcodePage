@@ -304,8 +304,10 @@
                 // else{
                     var s1=  transform.scale[0] ;
                     var s2 = transform.scale[1];
-                    transform.scale[0]=s1>2?2:s1;
-                    transform.scale[1]=s2>2?2:s2; 
+                    // transform.scale[0]=s1>2?2:s1;
+                    // transform.scale[1]=s2>2?2:s2; 
+                    transform.scale[0]=s1 ;
+                    transform.scale[1]=s2 ; 
                     transform.translate[0]= transform.translate[0] -_this.translate[0];
                     transform.translate[1]= transform.translate[1] -_this.translate[1]; 
                 // }
